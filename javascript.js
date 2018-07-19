@@ -1,7 +1,7 @@
 // Countdown Code
 
 
-// Date Input Variables
+// Date Variables
 var now; // Variable for current date.
 var formatNow; // Variable for changing the format of the current date.
 
@@ -21,7 +21,6 @@ var days;
 var hours;
 var minutes;
 var seconds;
-
 var distanceStored;
 var daysStored;
 var hoursStored;
@@ -39,16 +38,20 @@ var div;
 var collection;
 
 
+
+
 window.onload = function() {
 	
-	now = new Date();
 	
+	// Format Time
+	now = new Date();
 	formatNow = now.toString("HH:mm:ss");
 	document.getElementById("timeInput").value = formatNow;
-	
 	formatNow = now.toString("yyyy-MM-dd");
 	document.getElementById("dateInput").value = formatNow;
 	
+	
+	// Creating Arrays
 	distanceStored = [0];
 	daysStored = [0];
 	hoursStored = [0];
@@ -59,9 +62,15 @@ window.onload = function() {
 	object = [0];
 	collection = true;
 	
-	document.addEventListener("deviceready", onDeviceReady, false);
-
+	
+	// Creating Events
+	document.addEventListener("deviceready", Countdown, false);
+	document.addEventListener("deviceready", startCountdown, false);
+	
+	
 }
+
+
 
 
 function Process() {
@@ -78,26 +87,56 @@ function Process() {
 	countdownStorage[Number(countdownStorage.length)] = { "id":Number(countdownStorage.length), "name":name, "date":countdownDate }
 	countdownJSON = JSON.stringify(countdownStorage[Number(countdownStorage.length)-1]);
 	localStorage.setItem(Number(countdownStorage.length)-1, countdownJSON);
-	
 	text = localStorage.getItem(Number(countdownStorage.length)-1);
 	object[Number(object.length)] = JSON.parse(text);
-	document.getElementById("stored").innerHTML = object[Number(object.length)-1].name;
-	
-	for(loop = 1; loop < countdownStorage.length; loop+=1) {
-			
-			distance = object[Number(object.length)-1].date - now;
-			daysStored[loop] = Math.floor(distance / (1000 * 60 * 60 * 24));
-			hoursStored[loop] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			minutesStored[loop] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			secondsStored[loop] = Math.floor((distance % (1000 * 60)) / 1000);
-			document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[Number(object.length)-1].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
-			
-	}		
 	
 	
-	process = setInterval(function() {
+	Countdown();
+	
+}
 
 
+
+
+function startCountdown() {
+	
+		// Get todays date and time.
+		now = new Date().getTime();
+		
+		loop = 1;
+		
+		while (collection == true) {
+			
+			text = localStorage.getItem(loop);
+			object[loop] = JSON.parse(text);
+			if (loop == object[loop].id) {
+				
+				distanceStored[loop] = object[loop].date - now;
+				daysStored[loop] = Math.floor(distance / (1000 * 60 * 60 * 24));
+				hoursStored[loop] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				minutesStored[loop] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				secondsStored[loop] = Math.floor((distance % (1000 * 60)) / 1000);
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
+				
+			}
+			else {
+				collection = false;
+			}
+			
+			loop = loop + 1;			
+		}
+	
+}
+
+
+
+
+function Countdown() {
+	
+    process = setInterval(function() {
+		
+		
+		// For the First page.
 		// Get todays date and time.
 		now = new Date().getTime();
 		
@@ -110,18 +149,22 @@ function Process() {
 		minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 		seconds = Math.floor((distance % (1000 * 60)) / 1000);
 		
-		// Output the Result"
-		document.getElementById("countdown").innerHTML = name + ":   " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds. ";
-		
-		// When the Countdown is Over.
+		// Output the Result.
 		if (distance < 0) {
-			clearInterval(process);
+			// When the Countdown is Over.
 			document.getElementById("countdown").innerHTML = name + ":   EXPIRED";
 		}
+		else {
+			// Countdown is still going.
+			document.getElementById("countdown").innerHTML = name + ":   " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds. ";
+		}
 		
-		document.getElementById("stored").innerHTML = "";
 		
 		// For the Second page.
+		// Clears HTML Element.
+		document.getElementById("stored").innerHTML = "";
+		
+		// Creates a loop.
 		for(loop = 1; loop < countdownStorage.length; loop+=1) {
 			
 			// Get todays date and time.
@@ -133,57 +176,19 @@ function Process() {
 			minutesStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60)) / (1000 * 60));
 			secondsStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60)) / 1000);
 			
-			// Output the Result"
-			document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
-		
-			// When the Countdown is Over.
+			// Output the Result.
 			if (distanceStored[loop] < 0) {
-				clearInterval(process);
+				// When the Countdown is Over.
 				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + name + ":   EXPIRED"  + "<BR>";
 			}
-			
-		}
-		
-		
-	}, 1000);
-	
-}
-
-
-function onDeviceReady() {
-	
-    process = setInterval(function() {
-		
-		loop = 1;
-		
-		while (collection == true) {
-			
-			text = localStorage.getItem(loop);
-			object[loop] = JSON.parse(text);
-			if (loop == object[loop].id) {
-				
-				document.getElementById("stored").innerHTML = object[loop].name;
-				
-				div[loop] = document.createElement("div");
-				div.id = loop;
-				document.body.appendChild(div[loop]);
-					
-				distance = object[loop].date - now;
-				daysStored[loop] = Math.floor(distance / (1000 * 60 * 60 * 24));
-				hoursStored[loop] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				minutesStored[loop] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-				secondsStored[loop] = Math.floor((distance % (1000 * 60)) / 1000);
-				document.getElementById("stored").innerHTML = object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. ";
-				
-			}
 			else {
-				collection = false;
+				// Countdown is still going.
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
 			}
 			
-			loop = loop + 1;			
 		}
+		
 		
 	}, 1000);
 	
 }
-
