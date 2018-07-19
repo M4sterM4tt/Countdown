@@ -178,7 +178,7 @@ function Countdown() {
 			// Output the Result.
 			if (distanceStored[loop] < 0) {
 				// When the Countdown is Over.
-				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + name + ":   EXPIRED"  + "<BR>";
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].name + ":   EXPIRED"  + "<BR>";
 			}
 			else {
 				// Countdown is still going.
