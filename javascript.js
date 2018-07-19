@@ -61,6 +61,7 @@ window.onload = function() {
 	div = [0];
 	object = [0];
 	collection = true;
+	page1Count = false;
 	
 	
 	// Creating Events
@@ -90,7 +91,7 @@ function Process() {
 	text = localStorage.getItem(Number(countdownStorage.length)-1);
 	object[Number(object.length)] = JSON.parse(text);
 	
-	
+	page1Count = true;
 	Countdown();
 	
 }
@@ -135,29 +136,33 @@ function Countdown() {
 	
     process = setInterval(function() {
 		
-		// For the First page.
 		// Get todays date and time.
 		now = new Date().getTime();
-		
-		// Find the distance between now an the count down date.
-		distance = countdownDate - now;
-		
-		// Time calculations for days, hours, minutes and seconds.
-		days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		seconds = Math.floor((distance % (1000 * 60)) / 1000);
-		
-		// Output the Result.
-		if (distance < 0) {
-			// When the Countdown is Over.
-			document.getElementById("countdown").innerHTML = name + ":   EXPIRED";
+			
+		if (page1Count == true) {
+				
+			// For the First page.
+			
+			// Find the distance between now an the count down date.
+			distance = countdownDate - now;
+			
+			// Time calculations for days, hours, minutes and seconds.
+			days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			
+			// Output the Result.
+			if (distance < 0) {
+				// When the Countdown is Over.
+				document.getElementById("countdown").innerHTML = name + ":   EXPIRED";
+			}
+			else {
+				// Countdown is still going.
+				document.getElementById("countdown").innerHTML = name + ":   " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds. ";
+			}
+			
 		}
-		else {
-			// Countdown is still going.
-			document.getElementById("countdown").innerHTML = name + ":   " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds. ";
-		}
-		
 		
 		// For the Second page.
 		// Clears HTML Element.
