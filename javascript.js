@@ -135,61 +135,57 @@ function Countdown() {
 	
     process = setInterval(function() {
 		
-		while (loop > 2 || countdownStorage.length > 1) {
+		// For the First page.
+		// Get todays date and time.
+		now = new Date().getTime();
+		
+		// Find the distance between now an the count down date.
+		distance = countdownDate - now;
+		
+		// Time calculations for days, hours, minutes and seconds.
+		days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		
+		// Output the Result.
+		if (distance < 0) {
+			// When the Countdown is Over.
+			document.getElementById("countdown").innerHTML = name + ":   EXPIRED";
+		}
+		else {
+			// Countdown is still going.
+			document.getElementById("countdown").innerHTML = name + ":   " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds. ";
+		}
+		
+		
+		// For the Second page.
+		// Clears HTML Element.
+		document.getElementById("stored").innerHTML = "";
+		
+		// Creates a loop.
+		for(loop = 1; loop < countdownStorage.length; loop+=1) {
 			
-			// For the First page.
 			// Get todays date and time.
-			now = new Date().getTime();
-			
-			// Find the distance between now an the count down date.
-			distance = countdownDate - now;
+			distanceStored[loop] = object[loop].date - now;
 			
 			// Time calculations for days, hours, minutes and seconds.
-			days = Math.floor(distance / (1000 * 60 * 60 * 24));
-			hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			daysStored[loop] = Math.floor(distanceStored[loop] / (1000 * 60 * 60 * 24));
+			hoursStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			minutesStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60)) / (1000 * 60));
+			secondsStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60)) / 1000);
 			
 			// Output the Result.
-			if (distance < 0) {
+			if (distanceStored[loop] < 0) {
 				// When the Countdown is Over.
-				document.getElementById("countdown").innerHTML = name + ":   EXPIRED";
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + name + ":   EXPIRED"  + "<BR>";
 			}
 			else {
 				// Countdown is still going.
-				document.getElementById("countdown").innerHTML = name + ":   " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds. ";
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
 			}
 			
-			
-			// For the Second page.
-			// Clears HTML Element.
-			document.getElementById("stored").innerHTML = "";
-			
-			// Creates a loop.
-			for(loop = 1; loop < countdownStorage.length; loop+=1) {
-				
-				// Get todays date and time.
-				distanceStored[loop] = object[loop].date - now;
-				
-				// Time calculations for days, hours, minutes and seconds.
-				daysStored[loop] = Math.floor(distanceStored[loop] / (1000 * 60 * 60 * 24));
-				hoursStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				minutesStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60)) / (1000 * 60));
-				secondsStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60)) / 1000);
-				
-				// Output the Result.
-				if (distanceStored[loop] < 0) {
-					// When the Countdown is Over.
-					document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + name + ":   EXPIRED"  + "<BR>";
-				}
-				else {
-					// Countdown is still going.
-					document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
-				}
-				
-			}
-			
-		}
+		}	
 		
 	}, 1000);
 
