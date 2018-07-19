@@ -64,8 +64,8 @@ window.onload = function() {
 	
 	
 	// Creating Events
-	document.addEventListener("deviceready", Countdown, false);
 	document.addEventListener("deviceready", startCountdown, false);
+	document.addEventListener("deviceready", Countdown, false);
 	
 	
 }
