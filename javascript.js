@@ -75,7 +75,6 @@ window.onload = function() {
 	
 	// Creating Events
 	document.addEventListener("deviceready", startCountdown, false);
-	document.addEventListener("deviceready", Countdown, false);
 	
 	
 }
@@ -150,6 +149,8 @@ function startCountdown() {
 		}
 			
 	}			
+	
+	Countdown();
 	
 }
 
