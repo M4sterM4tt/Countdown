@@ -131,11 +131,21 @@ function startCountdown() {
 			
 			countdownStorage[loop] = loop;
 			distanceStored[loop] = object[loop].date - now;
-			daysStored[loop] = Math.floor(distance / (1000 * 60 * 60 * 24));
-			hoursStored[loop] = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			minutesStored[loop] = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			secondsStored[loop] = Math.floor((distance % (1000 * 60)) / 1000);
-			document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". " + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
+			daysStored[loop] = Math.floor(distanceStored[loop] / (1000 * 60 * 60 * 24));
+			hoursStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			minutesStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60)) / (1000 * 60));
+			secondsStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60)) / 1000);
+			
+			// Output the Result.
+			if (distanceStored[loop] < 0) {
+				// When the Countdown is Over.
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". " + object[loop].name + ":   EXPIRED"  + "<BR>";
+				localStorage.removeItem(loop);
+			}
+			else {
+				// Countdown is still going.
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". " + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
+			}
 				
 		}
 			
@@ -171,6 +181,7 @@ function Countdown() {
 			if (distance < 0) {
 				// When the Countdown is Over.
 				document.getElementById("countdown").innerHTML = name + ":   EXPIRED";
+				localStorage.removeItem(loop);
 			}
 			else {
 				// Countdown is still going.
@@ -204,6 +215,7 @@ function Countdown() {
 			if (distanceStored[loop] < 0) {
 				// When the Countdown is Over.
 				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". " + object[loop].name + ":   EXPIRED"  + "<BR>";
+				localStorage.removeItem(loop);
 			}
 			else {
 				// Countdown is still going.
