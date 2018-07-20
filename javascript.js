@@ -32,6 +32,8 @@ var detailsNow;
 var countdownStorage;
 var countdownJSON;
 var loop;
+var loopTwo;
+var loopThree;
 var object;
 var collection;
 
@@ -58,7 +60,7 @@ window.onload = function() {
 	minutesStored = [0];
 	secondsStored = [0];
 	
-	for(draw = 0; draw < 99; draw+=1) {
+	for(draw = 0; draw < 999; draw+=1) {
 		object.push(0);
 		countdownStorage.push(0);
 		distanceStored.push(0);
@@ -74,7 +76,7 @@ window.onload = function() {
 	
 	
 	// Creating Events
-	document.addEventListener("deviceready", startCountdown, false);
+	document.addEventListener("deviceready", startCountdown, false);	
 	
 	
 }
@@ -121,29 +123,29 @@ function startCountdown() {
 	// Get todays date and time.
 	now = new Date().getTime();
 	
-	for	(loop = 1; loop < 1000; loop+=1) {
+	for	(loopTwo = 1; loopTwo < 1000; loopTwo+=1) {
 				
-		text = localStorage.getItem(loop);
-		object[loop] = JSON.parse(text);	
+		text = localStorage.getItem(loopTwo);
+		object[loopTwo] = JSON.parse(text);	
 			
-		if (loop == object[loop].id) {
+		if (loopTwo == object[loopTwo].id) {
 			
-			countdownStorage[loop] = loop;
-			distanceStored[loop] = object[loop].date - now;
-			daysStored[loop] = Math.floor(distanceStored[loop] / (1000 * 60 * 60 * 24));
-			hoursStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			minutesStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60)) / (1000 * 60));
-			secondsStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60)) / 1000);
+			countdownStorage[loopTwo] = loopTwo;
+			distanceStored[loopTwo] = object[loopTwo].date - now;
+			daysStored[loopTwo] = Math.floor(distanceStored[loopTwo] / (1000 * 60 * 60 * 24));
+			hoursStored[loopTwo] = Math.floor((distanceStored[loopTwo] % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			minutesStored[loopTwo] = Math.floor((distanceStored[loopTwo] % (1000 * 60 * 60)) / (1000 * 60));
+			secondsStored[loopTwo] = Math.floor((distanceStored[loopTwo] % (1000 * 60)) / 1000);
 			
 			// Output the Result.
-			if (distanceStored[loop] < 0) {
+			if (distanceStored[loopTwo] < 0) {
 				// When the Countdown is Over.
-				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". " + object[loop].name + ":   EXPIRED"  + "<BR>";
-				localStorage.removeItem(loop);
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loopTwo].id + ". " + object[loopTwo].name + ":   EXPIRED"  + "<BR>";
+				localStorage.removeItem(loopTwo);
 			}
 			else {
 				// Countdown is still going.
-				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". " + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loopTwo].id + ". " + object[loopTwo].name + ":    " + daysStored[loopTwo] + " days, " + hoursStored[loopTwo] + " hours, " + minutesStored[loopTwo] + " minutes, " + secondsStored[loopTwo] + " seconds. "  + "<BR>";
 			}
 				
 		}
@@ -182,7 +184,6 @@ function Countdown() {
 			if (distance < 0) {
 				// When the Countdown is Over.
 				document.getElementById("countdown").innerHTML = name + ":   EXPIRED";
-				localStorage.removeItem(loop);
 			}
 			else {
 				// Countdown is still going.
@@ -198,29 +199,29 @@ function Countdown() {
 		document.getElementById("stored").innerHTML = "";
 		
 		// Creates a loop.
-		for(loop = 1; loop < 1000; loop+=1) {
+		for(loopThree = 1; loopThree < 1000; loopThree+=1) {
 			
-			text = localStorage.getItem(loop);
-			object[loop] = JSON.parse(text);	
+			text = localStorage.getItem(loopThree);
+			object[loopThree] = JSON.parse(text);	
 			
 			// Get todays date and time.
-			distanceStored[loop] = object[loop].date - now;
+			distanceStored[loopThree] = object[loopThree].date - now;
 				
 			// Time calculations for days, hours, minutes and seconds.
-			daysStored[loop] = Math.floor(distanceStored[loop] / (1000 * 60 * 60 * 24));
-			hoursStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			minutesStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60 * 60)) / (1000 * 60));
-			secondsStored[loop] = Math.floor((distanceStored[loop] % (1000 * 60)) / 1000);
+			daysStored[loopThree] = Math.floor(distanceStored[loopThree] / (1000 * 60 * 60 * 24));
+			hoursStored[loopThree] = Math.floor((distanceStored[loopThree] % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			minutesStored[loopThree] = Math.floor((distanceStored[loopThree] % (1000 * 60 * 60)) / (1000 * 60));
+			secondsStored[loopThree] = Math.floor((distanceStored[loopThree] % (1000 * 60)) / 1000);
 				
 			// Output the Result.
-			if (distanceStored[loop] < 0) {
+			if (distanceStored[loopThree] < 0) {
 				// When the Countdown is Over.
-				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". " + object[loop].name + ":   EXPIRED"  + "<BR>";
-				localStorage.removeItem(loop);
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loopThree].id + ". " + object[loopThree].name + ":   EXPIRED"  + "<BR>";
+				localStorage.removeItem(loopThree);
 			}
 			else {
 				// Countdown is still going.
-				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loop].id + ". "  + object[loop].name + ":    " + daysStored[loop] + " days, " + hoursStored[loop] + " hours, " + minutesStored[loop] + " minutes, " + secondsStored[loop] + " seconds. "  + "<BR>";
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loopThree].id + ". "  + object[loopThree].name + ":    " + daysStored[loopThree] + " days, " + hoursStored[loopThree] + " hours, " + minutesStored[loopThree] + " minutes, " + secondsStored[loopThree] + " seconds. "  + "<BR>";
 			}
 				
 		}	
