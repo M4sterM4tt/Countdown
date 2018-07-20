@@ -58,6 +58,15 @@ window.onload = function() {
 	minutesStored = [0];
 	secondsStored = [0];
 	
+	for(draw = 0; draw < 99; draw+=1) {
+		object.push(0);
+		countdownStorage.push(0);
+		distanceStored.push(0);
+		daysStored.push(0);
+		hoursStored.push(0);
+		minutesStored.push(0);
+		secondsStored.push(0);
+	}
 	
 	// Setting Switches.
 	collection = true;
