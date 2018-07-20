@@ -35,6 +35,7 @@ var loop;
 var loopTwo;
 var loopThree;
 var object;
+var objectTwo;
 var collection;
 
 
@@ -53,6 +54,7 @@ window.onload = function() {
 	
 	// Setting Arrays.
 	object = [0];
+	objectTwo = [0];
 	countdownStorage = [0];
 	distanceStored = [0];
 	daysStored = [0];
@@ -62,6 +64,7 @@ window.onload = function() {
 	
 	for(draw = 0; draw < 999; draw+=1) {
 		object.push(0);
+		objectTwo.push(0);
 		countdownStorage.push(0);
 		distanceStored.push(0);
 		daysStored.push(0);
@@ -77,7 +80,7 @@ window.onload = function() {
 	
 	// Creating Events
 	document.addEventListener("deviceready", startCountdown, false);	
-	
+	Countdown();
 	
 }
 
@@ -85,6 +88,8 @@ window.onload = function() {
 
 
 function Process() {
+	
+	console.log("Process");
 	
 	name = nameInput.value;
 	targetTime = timeInput.value;
@@ -120,6 +125,8 @@ function Process() {
 
 function startCountdown() {
 	
+	console.log("startCountdown");
+	
 	// Get todays date and time.
 	now = new Date().getTime();
 	
@@ -152,8 +159,6 @@ function startCountdown() {
 			
 	}			
 	
-	Countdown();
-	
 }
 
 
@@ -162,6 +167,7 @@ function startCountdown() {
 function Countdown() {
 	
     start = setInterval(function() {
+	console.log("Countdown");	
 		
 		// Get todays date and time.
 		now = new Date().getTime();
@@ -202,10 +208,10 @@ function Countdown() {
 		for(loopThree = 1; loopThree < 1000; loopThree+=1) {
 			
 			text = localStorage.getItem(loopThree);
-			object[loopThree] = JSON.parse(text);	
+			objectTwo[loopThree] = JSON.parse(text);	
 			
 			// Get todays date and time.
-			distanceStored[loopThree] = object[loopThree].date - now;
+			distanceStored[loopThree] = objectTwo[loopThree].date - now;
 				
 			// Time calculations for days, hours, minutes and seconds.
 			daysStored[loopThree] = Math.floor(distanceStored[loopThree] / (1000 * 60 * 60 * 24));
@@ -216,12 +222,12 @@ function Countdown() {
 			// Output the Result.
 			if (distanceStored[loopThree] < 0) {
 				// When the Countdown is Over.
-				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loopThree].id + ". " + object[loopThree].name + ":   EXPIRED"  + "<BR>";
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + objectTwo[loopThree].id + ". " + objectTwo[loopThree].name + ":   EXPIRED"  + "<BR>";
 				localStorage.removeItem(loopThree);
 			}
 			else {
 				// Countdown is still going.
-				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + object[loopThree].id + ". "  + object[loopThree].name + ":    " + daysStored[loopThree] + " days, " + hoursStored[loopThree] + " hours, " + minutesStored[loopThree] + " minutes, " + secondsStored[loopThree] + " seconds. "  + "<BR>";
+				document.getElementById("stored").innerHTML = document.getElementById("stored").innerHTML + objectTwo[loopThree].id + ". "  + objectTwo[loopThree].name + ":    " + daysStored[loopThree] + " days, " + hoursStored[loopThree] + " hours, " + minutesStored[loopThree] + " minutes, " + secondsStored[loopThree] + " seconds. "  + "<BR>";
 			}
 				
 		}	
